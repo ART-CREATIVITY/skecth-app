@@ -39,6 +39,7 @@ public class ProductDisplayActivity extends AppCompatActivity {
         binding.stockAvailable.setText(String.format("%s", product.stockAvailable));
         binding.productDescription.setText(product.description);
         binding.author.setText(product.author.fullName());
+// ok
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
