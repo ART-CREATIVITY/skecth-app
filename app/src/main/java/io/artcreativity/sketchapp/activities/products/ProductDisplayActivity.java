@@ -1,5 +1,6 @@
 package io.artcreativity.sketchapp.activities.products;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +8,13 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -58,6 +63,30 @@ public class ProductDisplayActivity extends AppCompatActivity {
                 startActivityForResult(intent, EditProductActivity.REQUEST_CODE);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(ProductDisplayActivity.this);
+        inflater.inflate(R.menu.product_display_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.edit_item:
+                // TODO: 30/09/2022 Operation pour mettre a jour le produit
+                Toast.makeText(this, "Clique sur Modification", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.profile_item:
+                // TODO: 30/09/2022 Operation pour modifier le profile
+                Toast.makeText(this, "Clique sur profil", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
