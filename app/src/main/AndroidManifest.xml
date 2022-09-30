@@ -14,10 +14,13 @@
         android:theme="@style/Theme.SketchApp"
         tools:targetApi="31">
         <activity
+            android:name=".activities.products.EditProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.products.ProductDisplayActivity"
             android:exported="true"
             android:label="@string/title_activity_product_display"
-            android:theme="@style/Theme.SketchApp.NoActionBar" >
+            android:theme="@style/Theme.SketchApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,9 +29,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

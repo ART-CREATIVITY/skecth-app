@@ -6,8 +6,9 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_ac_seul.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.112" />
+        <entry key="app/src/main/res/layout/activity_edit_product.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/activity_product_display.xml" value="0.15555555555555556" />
+        <entry key="app/src/main/res/layout/activity_product_display.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_product_display.xml" value="0.13020833333333334" />
       </map>
     </option>
