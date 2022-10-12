@@ -28,6 +28,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_label"
+                    android:drawablePadding="@dimen/default_marge"
+                    android:maxLines="1"
                     android:hint="@string/article"
                     android:id="@+id/product_name"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -35,10 +38,15 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_marge"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_available"
+                    android:drawablePadding="@dimen/default_marge"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:hint="@string/stock_available"
                     android:id="@+id/stock_available"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -46,10 +54,15 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_marge"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_price"
+                    android:drawablePadding="@dimen/default_marge"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:hint="@string/price"
                     android:id="@+id/product_price"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -57,10 +70,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_marge"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_description"
+                    android:drawablePadding="@dimen/default_marge"
                     android:hint="@string/description"
                     android:minLines="5"
                     android:maxLines="5"
@@ -70,6 +86,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_marge"
                 android:text="@string/save"
                 android:onClick="saveData"
                 tools:ignore="UsingOnClickInXml"

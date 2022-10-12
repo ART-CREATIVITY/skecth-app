@@ -21,6 +21,9 @@
     <string name="profile">Profil</string>
     <string name="edit">Modifier</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="initial_price">50 000</string>
+    <string name="last_name">Nom</string>
+    <string name="first_name">Prénom</string>
 
     <array name="product_name_list">
         <item>Mercedes</item>
