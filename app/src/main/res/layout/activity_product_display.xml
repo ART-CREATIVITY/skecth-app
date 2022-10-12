@@ -77,9 +77,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$50 000"
+                    android:text="@string/initial_price"
                     android:textSize="32sp"
                     android:textColor="#FFC107"
+                    android:id="@+id/product_price"
                     android:textStyle="bold"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <TextView

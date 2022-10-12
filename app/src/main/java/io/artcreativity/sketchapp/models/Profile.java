@@ -27,4 +27,12 @@ public class Profile implements Serializable {
     public String fullName() {
         return lastName + " " + firstName;
     }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }
