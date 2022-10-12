@@ -4,9 +4,16 @@ import java.io.Serializable;
 
 public class Profile implements Serializable {
 
+    public static final String TABLE = "profiles";
+    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS profiles (" +
+            "id Integer PRIMARY KEY AUTOINCREMENT," +
+            "first_name TEXT NOT NULL," +
+            "last_name TEXT NOT NULL," +
+            "image TEXT)";
     public String firstName;
     public String lastName;
     public String image;
+    public Long id;
 
     public Profile() {
     }

@@ -45,7 +45,7 @@ public class ProductDisplayActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
         binding.productName.setText(product.name);
-        binding.productImage.setImageResource(product.image);
+//        binding.productImage.setImageResource(product.image);
         binding.stockAvailable.setText(String.format("%s", product.stockAvailable));
         binding.productDescription.setText(product.description);
         binding.author.setText(product.author.fullName());
@@ -63,6 +63,8 @@ public class ProductDisplayActivity extends AppCompatActivity {
                 startActivityForResult(intent, EditProductActivity.REQUEST_CODE);
             }
         });
+
+        BuildData.testDB(this);
     }
 
     @Override
