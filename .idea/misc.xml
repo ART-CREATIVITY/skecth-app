@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/activity_product_display.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_product_display.xml" value="0.13020833333333334" />
+        <entry key="app/src/main/res/layout/product_item_view.xml" value="0.67" />
         <entry key="app/src/main/res/layout/simple_product.xml" value="0.1" />
         <entry key="app/src/main/res/menu/product_display_menu.xml" value="0.1" />
       </map>

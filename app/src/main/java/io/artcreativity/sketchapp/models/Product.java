@@ -2,6 +2,10 @@ package io.artcreativity.sketchapp.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.artcreativity.sketchapp.R;
 
 public class Product implements Serializable {
 
@@ -21,6 +25,9 @@ public class Product implements Serializable {
     public static final String COLUMN_AUTHOR_ID = "author_id";
     public static final String COLUMN_STOCK_AVAILABLE = "stock_available";
     public static final String COLUMN_PRICE = "price";
+
+    public static final String[] FROM = new String[]{COLUMN_NAME, COLUMN_STOCK_AVAILABLE, COLUMN_PRICE};
+    public static final int[] TO = new int[]{R.id.product_name, R.id.stock_available, R.id.product_price};
 
 
     public long id;
@@ -52,5 +59,14 @@ public class Product implements Serializable {
                 ", stockAvailable=" + stockAvailable +
                 ", price=" + price +
                 '}';
+    }
+
+    public Map<String, String> toMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put(COLUMN_NAME, name);
+        map.put(COLUMN_STOCK_AVAILABLE, stockAvailable + "");
+        map.put(COLUMN_PRICE, price.toString());
+
+        return map;
     }
 }
