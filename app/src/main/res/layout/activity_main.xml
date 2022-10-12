@@ -6,50 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <ListView
+        android:id="@+id/product_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:entries="@array/product_name_list"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bonjour a tous !"
-            android:layout_margin="24dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Téléphone"
-            android:inputType="phone"
-            android:drawableStart="@drawable/ic_ac_seul_2"
-            android:drawablePadding="8dp"
-            android:layout_margin="24dp"
-            android:paddingVertical="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="16dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Click me"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
-            android:src="@drawable/artboard"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 
 

@@ -21,4 +21,17 @@
     <string name="profile">Profil</string>
     <string name="edit">Modifier</string>
     <string name="title_activity_profile">ProfileActivity</string>
+
+    <array name="product_name_list">
+        <item>Mercedes</item>
+        <item>Toyota</item>
+        <item>BMW</item>
+        <item>Nissan</item>
+        <item>Honda</item>
+        <item>Range Rover</item>
+        <item>Jeep</item>
+        <item>Hiunday</item>
+        <item>Mazda</item>
+        <item>Bugatti</item>
+    </array>
 </resources>
