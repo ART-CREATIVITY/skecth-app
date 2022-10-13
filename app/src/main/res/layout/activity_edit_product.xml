@@ -84,15 +84,22 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_marge"
                 android:text="@string/save"
-                android:onClick="saveData"
-                tools:ignore="UsingOnClickInXml"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 

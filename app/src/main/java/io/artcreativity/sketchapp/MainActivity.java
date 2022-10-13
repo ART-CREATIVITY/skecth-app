@@ -2,19 +2,28 @@ package io.artcreativity.sketchapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import io.artcreativity.sketchapp.activities.products.EditProductActivity;
+import io.artcreativity.sketchapp.adapters.ProductAdapter;
 import io.artcreativity.sketchapp.dao.DataBaseHelper;
 import io.artcreativity.sketchapp.dao.ProductDao;
+import io.artcreativity.sketchapp.metiers.ProductManager;
+import io.artcreativity.sketchapp.metiers.ProductManagerImplOnline;
 import io.artcreativity.sketchapp.models.Product;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,16 +32,22 @@ public class MainActivity extends AppCompatActivity {
     private DataBaseHelper dataBaseHelper;
     List<Product> products = new ArrayList<>();
     ProductDao productDao;
+    FloatingActionButton fab;
+    CircularProgressIndicator loader;
+    ProductManager productManager = new ProductManagerImplOnline();
+    ProductAdapter adapter;
 
     @Override // premiere fonction appelee
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         productListView = findViewById(R.id.product_list);
+        fab = findViewById(R.id.fab);
+        loader= findViewById(R.id.loader);
 
         dataBaseHelper = DataBaseHelper.getInstance(this);
         productDao = new ProductDao(dataBaseHelper);
-        products.addAll(productDao.findAll());
+//        products.addAll(productDao.findAll());
 //        List<String> strs = new ArrayList<>();
 //        for (int i=1; i<100; i++)  {
 //            strs.add(String.valueOf(i));
@@ -40,17 +55,24 @@ public class MainActivity extends AppCompatActivity {
 //        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.simple_product, strs);
 //        productListView.setAdapter(adapter);
 //        List<Map<String, String>> building = products.stream().map(Product::toMap).collect(Collectors.toList());
-        List<Map<String, String>> building = new ArrayList<>();
-        for (Product product : products) {
-            building.add(product.toMap());
-        }
-        SimpleAdapter adapter = new SimpleAdapter(this, building, R.layout.product_item_view, Product.FROM, Product.TO);
+//        List<Map<String, String>> building = new ArrayList<>();
+//        for (Product product : products) {
+//            building.add(product.toMap());
+//        }
+//        adapter = new SimpleAdapter(this, building, R.layout.product_item_view, Product.FROM, Product.TO);
+        adapter = new ProductAdapter(products);
 
         productListView.setAdapter(adapter);
+
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, EditProductActivity.class);
+            startActivity(intent);
+        });
     }
     @Override // appelee apres le onCreate | Rappelee apres onStop si activite non detruite
     protected void onStart() {
         super.onStart();
+        fetchData();
     }
     @Override // appelee apres onStart | Elle est egalement appele du retour de onPause
     protected void onResume() {
@@ -68,5 +90,16 @@ public class MainActivity extends AppCompatActivity {
     @Override // appelee lorsque l'activite veut etre detruite
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void fetchData() {
+        new Thread(() -> {
+            List<Product> ps = productManager.findAll();
+            runOnUiThread(() -> {
+                adapter.products.addAll(ps);
+                adapter.notifyDataSetChanged();
+                loader.setVisibility(View.GONE);
+            });
+        }).start();
     }
 }

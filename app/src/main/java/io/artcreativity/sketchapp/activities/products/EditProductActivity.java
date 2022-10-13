@@ -7,13 +7,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.math.BigDecimal;
 
 import io.artcreativity.sketchapp.R;
+import io.artcreativity.sketchapp.metiers.ProductManager;
+import io.artcreativity.sketchapp.metiers.ProductManagerImplOnline;
 import io.artcreativity.sketchapp.models.Product;
 
 public class EditProductActivity extends AppCompatActivity {
@@ -23,8 +28,11 @@ public class EditProductActivity extends AppCompatActivity {
     private TextInputEditText stockAvailable;
     private TextInputEditText productPrice;
     private TextInputEditText productDescription;
+    private CircularProgressIndicator loader;
+    private Button btnSave;
 
     private Product product;
+    ProductManager productManager = new ProductManagerImplOnline();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +44,22 @@ public class EditProductActivity extends AppCompatActivity {
         stockAvailable = findViewById(R.id.stock_available);
         productPrice = findViewById(R.id.product_price);
         productDescription = findViewById(R.id.product_description);
+        loader = findViewById(R.id.loader);
+        btnSave = findViewById(R.id.btn_save);
+
+        btnSave.setOnClickListener(this::saveData);
 
         // Recuperation des elements passes dans l'Intent utilise pour demarrer l'activity
         Intent data = getIntent();
         product = (Product) data.getSerializableExtra(ProductDisplayActivity.PRODUCT_ID);
-        productName.setText(product.name);
-        productDescription.setText(product.description);
-        stockAvailable.setText(String.valueOf(product.stockAvailable));
-        productPrice.setText(product.price.toString());
+        if(product!=null) {
+            productName.setText(product.name);
+            productDescription.setText(product.description);
+            stockAvailable.setText(String.valueOf(product.stockAvailable));
+            productPrice.setText(product.price.toString());
+        } else {
+            product = new Product();
+        }
     }
 
     public void saveData(View v) {
@@ -55,14 +71,24 @@ public class EditProductActivity extends AppCompatActivity {
         product.description = productDescription.getText().toString();
         product.stockAvailable = Double.parseDouble(stockAvailable.getText().toString());
         product.price = BigDecimal.valueOf(Double.parseDouble(productPrice.getText().toString()));
+        btnSave.setVisibility(View.GONE);
+        loader.setVisibility(View.VISIBLE);
 
+        new Thread(() -> {
+            Product p = productManager.createProduct(product);
+            Log.d(TAG, "saveData: id == " + p.id);
+            runOnUiThread(() -> {
+                Snackbar.make(getApplicationContext(), loader, "Enregistrer avec Success", 5000).show();
+                Intent intent = new Intent();
+                intent.putExtra(ProductDisplayActivity.PRODUCT_ID, p);
+                // Informer le system que l'activite a effectue sa tache succes grace au parametre Activity.RESULT_OK
+                // intent contient les informations a retourne a l'activite precedente
+                setResult(Activity.RESULT_OK, intent);
+                // Mettre fin a l'activite courante
+                finish();
+            });
+        }).start();
         // Creation d'une Intent pour envoyer les nouvelles informations dans le product
-        Intent intent = new Intent();
-        intent.putExtra(ProductDisplayActivity.PRODUCT_ID, product);
-        // Informer le system que l'activite a effectue sa tache succes grace au parametre Activity.RESULT_OK
-        // intent contient les informations a retourne a l'activite precedente
-        setResult(Activity.RESULT_OK, intent);
-        // Mettre fin a l'activite courante
-        finish();
+
     }
 }
