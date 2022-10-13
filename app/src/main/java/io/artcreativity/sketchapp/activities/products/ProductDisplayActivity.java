@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
@@ -45,7 +46,7 @@ public class ProductDisplayActivity extends AppCompatActivity {
     public static final String PRODUCT_ID = "product";
     public static final String PROFILE_ID = "profile";
     private ActivityProductDisplayBinding binding;
-    private Product product = BuildData.generateProduct();
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +54,17 @@ public class ProductDisplayActivity extends AppCompatActivity {
 
         binding = ActivityProductDisplayBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        product = (Product) getIntent().getSerializableExtra(PRODUCT_ID);
         setSupportActionBar(binding.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         binding.productName.setText(product.name);
 //        binding.productImage.setImageResource(product.image);
         binding.stockAvailable.setText(String.format("%s", product.stockAvailable));
         binding.productDescription.setText(product.description);
-        binding.author.setText(product.author.fullName());
+        if(product.author!=null)
+            binding.author.setText(product.author.fullName());
         binding.productPrice.setText(numberFormat.format(product.price));
 
 // ok

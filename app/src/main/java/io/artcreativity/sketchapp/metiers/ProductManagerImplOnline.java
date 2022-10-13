@@ -22,7 +22,7 @@ public class ProductManagerImplOnline implements ProductManager {
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
     private Gson gson = new Gson();
-    private String PRODUCT_URL = "http:192.168.0.100:8080/products";
+    private String PRODUCT_URL = "http://54.162.15.114:8080/sketch/products";
 
 
     @Override
@@ -48,6 +48,12 @@ public class ProductManagerImplOnline implements ProductManager {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public Product updateProduct(long productId, Product product) {
+        // TODO: 13/10/2022 Implement update function
+        return product;
     }
 
     String post(String url, String json) throws IOException {

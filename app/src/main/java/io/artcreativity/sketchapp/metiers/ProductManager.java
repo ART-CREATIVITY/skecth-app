@@ -8,4 +8,5 @@ public interface ProductManager {
 
     Product createProduct(Product product);
     List<Product> findAll();
+    Product updateProduct(long productId, Product product);
 }

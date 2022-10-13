@@ -1,5 +1,6 @@
 package io.artcreativity.sketchapp.activities.products;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -47,6 +48,9 @@ public class EditProductActivity extends AppCompatActivity {
         loader = findViewById(R.id.loader);
         btnSave = findViewById(R.id.btn_save);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         btnSave.setOnClickListener(this::saveData);
 
         // Recuperation des elements passes dans l'Intent utilise pour demarrer l'activity
@@ -75,10 +79,15 @@ public class EditProductActivity extends AppCompatActivity {
         loader.setVisibility(View.VISIBLE);
 
         new Thread(() -> {
-            Product p = productManager.createProduct(product);
+            Product p;
+            if(product.id>0) {
+                p = productManager.updateProduct(product.id, product);
+            } else {
+                p = productManager.createProduct(product);
+            }
             Log.d(TAG, "saveData: id == " + p.id);
             runOnUiThread(() -> {
-                Snackbar.make(getApplicationContext(), loader, "Enregistrer avec Success", 5000).show();
+//                Snackbar.make(getApplicationContext(), loader, "Enregistrer avec Success", 5000).show();
                 Intent intent = new Intent();
                 intent.putExtra(ProductDisplayActivity.PRODUCT_ID, p);
                 // Informer le system que l'activite a effectue sa tache succes grace au parametre Activity.RESULT_OK

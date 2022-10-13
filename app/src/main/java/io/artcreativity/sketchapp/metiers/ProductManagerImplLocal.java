@@ -15,4 +15,9 @@ public class ProductManagerImplLocal implements ProductManager {
     public List<Product> findAll() {
         return null;
     }
+
+    @Override
+    public Product updateProduct(long productId, Product product) {
+        return null;
+    }
 }
