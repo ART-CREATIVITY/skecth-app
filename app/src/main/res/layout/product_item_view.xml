@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:id="@+id/product_item_layout"
     android:padding="@dimen/normal_marge">
 
     <ImageView

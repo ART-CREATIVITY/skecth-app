@@ -117,6 +117,9 @@ public class ProductDisplayActivity extends AppCompatActivity {
                 startActivityForResult(profileItemIntent, ProfileActivity.REQUEST_CODE);
                 Toast.makeText(this, "Clique sur profil", Toast.LENGTH_SHORT).show();
                 break;
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

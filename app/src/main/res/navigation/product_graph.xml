@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product_graph"
+    app:startDestination="@id/mainActivity">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="io.artcreativity.sketchapp.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main"
+        />
+    <activity
+        android:id="@+id/productDisplayActivity"
+        android:name="io.artcreativity.sketchapp.activities.products.ProductDisplayActivity"
+        android:label="activity_product_display"
+        tools:layout="@layout/activity_product_display" />
+    <activity
+        android:id="@+id/editProductActivity"
+        android:name="io.artcreativity.sketchapp.activities.products.EditProductActivity"
+        android:label="activity_edit_product"
+        tools:layout="@layout/activity_edit_product" />
+</navigation>

@@ -2,15 +2,23 @@ package io.artcreativity.sketchapp;
 
 import static io.artcreativity.sketchapp.activities.products.ProductDisplayActivity.PRODUCT_ID;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -23,14 +31,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import io.artcreativity.sketchapp.activities.login.ui.login.LoginActivity;
 import io.artcreativity.sketchapp.activities.products.EditProductActivity;
 import io.artcreativity.sketchapp.activities.products.ProductDisplayActivity;
+import io.artcreativity.sketchapp.activities.settings.SettingsActivity;
 import io.artcreativity.sketchapp.adapters.ProductAdapter;
 import io.artcreativity.sketchapp.dao.DataBaseHelper;
 import io.artcreativity.sketchapp.dao.ProductDao;
 import io.artcreativity.sketchapp.metiers.ProductManager;
 import io.artcreativity.sketchapp.metiers.ProductManagerImplOnline;
 import io.artcreativity.sketchapp.models.Product;
+import io.artcreativity.sketchapp.utils.MyPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,12 +55,23 @@ public class MainActivity extends AppCompatActivity {
     CircularProgressIndicator loader;
     ProductManager productManager = new ProductManagerImplOnline();
     ProductAdapter adapter;
+    MyPreferences preferences;
+    private long productSelected = -1;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override // premiere fonction appelee
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        preferences = MyPreferences.getInstance(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
+        if(preferences.isFirstLogin()) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         productListView = findViewById(R.id.product_list);
         fab = findViewById(R.id.fab);
         loader= findViewById(R.id.loader);
@@ -83,7 +105,46 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(PRODUCT_ID, products.get(i));
             startActivityIfNeeded(intent, DISPLAY_REQUEST);
         });
+        registerForContextMenu(productListView);
+//        productListView.setOnLongClickListener(view -> {
+//
+//            return false;
+//        });
     }
+
+//    @Override
+//    public void registerForContextMenu(View view) {
+//        super.registerForContextMenu(view);
+//
+//    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if(v.getId() == R.id.product_list) {
+            MenuInflater inflater = new MenuInflater(getApplicationContext());
+            inflater.inflate(R.menu.contextuel_list_menu, menu);
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+            Log.d("TAG", "onCreateContextMenu: " + info.position);
+            productSelected = info.position;
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.edit_item) {
+            Product product = adapter.products.get((int) productSelected);
+            Intent intent = new Intent(getApplicationContext(), EditProductActivity.class);
+            intent.putExtra(PRODUCT_ID, product);
+            startActivity(intent);
+        }
+
+
+        return super.onContextItemSelected(item);
+    }
+
     @Override // appelee apres le onCreate | Rappelee apres onStop si activite non detruite
     protected void onStart() {
         super.onStart();
@@ -116,6 +177,22 @@ public class MainActivity extends AppCompatActivity {
                 loader.setVisibility(View.GONE);
             });
         }).start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(getApplicationContext());
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.item_settings) {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
